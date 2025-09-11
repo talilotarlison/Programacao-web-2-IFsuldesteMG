@@ -1,4 +1,4 @@
-   # Apostila HMTL Alura:
+   # Apostila HTML Alura:
 
     # https://www.alura.com.br/apostila-html-css-javascript/03CA-a-spec-html
 
