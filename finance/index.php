@@ -1,101 +1,122 @@
 <?php
- # sessao do usuario
-  session_start();
+session_start();
 
-
-  if (!isset($_SESSION['usuario'])) {
-        header('Location: index.php');
+  if (isset($_SESSION['usuario'])) {
+    header('Location: home.php');
   }
 
-// index.php - Sistema simples de fluxo de caixa com SQLite
-
+// Simulação de usuário (substitua por consulta ao banco de dados)
+// Conexão com o banco de dados SQLite
 $db = new PDO('sqlite:finance.db');
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$erro = '';
 
-// Cria a tabela se não existir
-$db->exec("CREATE TABLE IF NOT EXISTS transacoes (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    valor REAL NOT NULL,
-    tipo TEXT CHECK(tipo IN ('entrada','saida')) NOT NULL,
-    data TEXT NOT NULL
-)");
-
-// Remover transação
-if (isset($_GET['remover'])) {
-    $stmt = $db->prepare("DELETE FROM transacoes WHERE id = ?");
-    $stmt->execute([$_GET['remover']]);
-    header("Location: index.php");
-    exit;
-}
-
-// Adicionar transação
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome = $_POST['nome'] ?? '';
-    $tipo = $_POST['tipo'] ?? '';
-    $valor = $_POST['valor'] ?? '';
-    $data = $_POST['data'] ?? '';
-    if ($nome && in_array($tipo, ['entrada','saida']) && $data) {
-        $stmt = $db->prepare("INSERT INTO transacoes (nome, tipo, valor, data) VALUES (?, ?,?, ?)");
-        $stmt->execute([$nome, $tipo, $valor, $data]);
-        header("Location: index.php");
+    $email = $_POST['email'] ?? '';
+    $senha = $_POST['senha'] ?? '';
+
+    // Consulta ao banco de dados
+    $stmt = $db->prepare('SELECT * FROM usuarios WHERE email = :email');
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($usuario && password_verify($senha, $usuario['senha'])) {
+        $_SESSION['usuario'] = $usuario['email'];
+        header('Location: home.php');
         exit;
+    } else {
+        $erro = 'E-mail ou senha inválidos.';
     }
 }
-
-// Listar transações
-$transacoes = $db->query("SELECT * FROM transacoes ORDER BY data DESC, id DESC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Fluxo de Caixa</title>
+    <title>Login - Finance</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background: #f0f0f0; }
-        .entrada { color: green; }
-        .saida { color: red; }
+        body {
+            background: #f5f7fa;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background: #fff;
+            padding: 32px 28px;
+            border-radius: 10px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            width: 340px;
+        }
+        h2 {
+            text-align: center;
+            color: #2d3a4b;
+            margin-bottom: 24px;
+        }
+        label {
+            color: #2d3a4b;
+            font-weight: 500;
+        }
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            margin-top: 6px;
+            margin-bottom: 18px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 15px;
+            background: #f9fafb;
+            transition: border 0.2s;
+        }
+        input[type="email"]:focus, input[type="password"]:focus {
+            border: 1.5px solid #4f8cff;
+            outline: none;
+            background: #fff;
+        }
+        button[type="submit"], button[type="button"] {
+            width: 100%;
+            padding: 12px;
+            background: #4f8cff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+        button[type="submit"]:hover {
+            background: #2563eb;
+        }
+        .error-message {
+            color: #e53e3e;
+            background: #fff0f0;
+            border: 1px solid #e53e3e;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <h1>Fluxo de Caixa</h1>
-    <h2>Usuário: <?= htmlspecialchars($_SESSION['usuario'] ?? 'Desconhecido'); ?></h2>
-    <a href="sair.php">Sair</a>
-    <form method="post">
-        <input type="text" name="nome" placeholder="Nome da transação" required>
-        <select name="tipo" required>
-            <option value="">Tipo</option>
-            <option value="entrada">Entrada</option>
-            <option value="saida">Saída</option>
-        </select>
-        <input type="number" step="0.01" name="valor" placeholder="Valor" required>
-        <input type="date" name="data" required>
-        <button type="submit">Adicionar</button>
-    </form>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Tipo</th>
-            <th>Valor</th>
-            <th>Data</th>
-            <th>Ação</th>
-        </tr>
-        <?php foreach ($transacoes as $t): ?>
-        <tr>
-            <td><?= htmlspecialchars($t['id']) ?></td>
-            <td><?= htmlspecialchars($t['nome']) ?></td>
-            <td class="<?= $t['tipo'] ?>"><?= ucfirst($t['tipo']) ?></td>
-            <td><?= htmlspecialchars($t['valor']) ?></td>
-            <td><?= htmlspecialchars($t['data']) ?></td>
-            <td>
-                <a href="?remover=<?= $t['id'] ?>" onclick="return confirm('Remover esta transação?')">Remover</a>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
+    <div class="login-container">
+        <h2>Login</h2>
+        <?php if ($erro): ?>
+            <div class="error-message"><?= htmlspecialchars($erro) ?></div>
+        <?php endif; ?>
+        <form method="post" action="login.php">
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" id="email" required>
+            <label for="senha">Senha:</label>
+            <input type="password" name="senha" id="senha" required>
+            <button type="submit">Entrar</button>
+            <button type="button" onclick="window.location.href='cadastroUsuario.php'">Cadastrar</button>
+        </form>
+    </div>
 </body>
 </html>
