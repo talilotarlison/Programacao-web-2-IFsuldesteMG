@@ -1,12 +1,4 @@
-### Apostila HTML Alura:
 
-https://www.alura.com.br/apostila-html-css-javascript/03CA-a-spec-html
-
-https://ricardo-reis.medium.com/servidor-php-no-macos-33dc078b4080#
- 
-Aqui está o conteúdo em formato Markdown com o exemplo de código:
-
-````markdown
 ### Para Garantir o Preenchimento Automático Correto do Navegador
 
 Para garantir que o navegador preencha corretamente um campo de formulário que já tenha um atributo `id` ou `name`, você precisa adicionar o atributo `autocomplete` ao elemento `<input>`, `<select>` ou `<textarea>`. Esse atributo fornece uma dica ao navegador sobre o tipo de dado esperado no campo, permitindo sugestões de preenchimento mais precisas.
@@ -18,9 +10,10 @@ Você pode adicionar o atributo `autocomplete` diretamente ao elemento `<input>`
 ### Exemplos:
 
 #### Para um Campo de Nome:
+
 ```html
 <input type="text" id="firstName" name="firstName" autocomplete="given-name">
-````
+```
 
 #### Para um Campo de E-mail:
 
@@ -67,4 +60,8 @@ Aqui está o código conforme solicitado, com o uso do atributo `autocomplete` p
 </form>
 ```
 
-Se precisar de mais algum ajuste ou exemplo, é só avisar!
+### Apostila HTML Alura:
+
+`https://www.alura.com.br/apostila-html-css-javascript/03CA-a-spec-html`
+
+`https://ricardo-reis.medium.com/servidor-php-no-macos-33dc078b4080#`
