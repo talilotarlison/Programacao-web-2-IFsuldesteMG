@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if ($erro): ?>
             <div class="error-message"><?= htmlspecialchars($erro) ?></div>
         <?php endif; ?>
-        <form method="post" action="login.php">
+        <form method="post" action=<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>>
             <label for="email">E-mail:</label>
             <input type="email" name="email" id="email" required>
             <label for="senha">Senha:</label>
