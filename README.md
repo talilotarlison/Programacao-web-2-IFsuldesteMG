@@ -65,3 +65,34 @@ Aqui está o código conforme solicitado, com o uso do atributo `autocomplete` p
 `https://www.alura.com.br/apostila-html-css-javascript/03CA-a-spec-html`
 
 `https://ricardo-reis.medium.com/servidor-php-no-macos-33dc078b4080#`
+
+#### Para transformar esse trecho de código PHP em um middleware para proteger rotas (e redirecionar se o usuário não estiver autenticado), você pode criar uma função reutilizável que será incluída nas páginas que precisam de proteção — como se fosse um middleware simples em frameworks como Laravel ou Express.js.
+
+| Nome da função/método       | Significado                                                  | Claro e direto? |
+| --------------------------- | ------------------------------------------------------------ | --------------- |
+| `checkGuest()`              | Verifica se é um visitante (não logado)                      | ✅ Sim           |
+| `isGuest()`                 | Retorna `true` se **não autenticado**                        | ✅ Sim           |
+| `checkUnauthenticated()`    | Verifica se não está autenticado                             | ✅ Sim           |
+| `redirectIfAuthenticated()` | Redireciona se já estiver logado (usado em rotas como login) | ✅ Sim           |
+| `onlyGuest()`               | Garante que só visitantes acessem                            | ✅ Sim           |
+
+
+```php
+<?php
+
+class Middleware
+{
+    public static function proteger(string $rotaRedirecionamento = '/login')
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['usuario'])) {
+            header("Location: $rotaRedirecionamento");
+            exit;
+        }
+    }
+}
+
+```
