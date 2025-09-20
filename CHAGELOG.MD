@@ -349,3 +349,107 @@ PRAGMA table_info(transacoes);
 Isso vai mostrar os nomes dos campos e seus tipos.
 
 Se quiser ajuda para adaptar a busca conforme o tipo real da coluna, posso te ajudar com isso também.
+
+
+```php
+ if ($busca && $tipo) {
+                    if (empty($busca)) {
+                        $error = "Dados da transação é obrigatório.";
+                    } elseif (empty($tipo) || !in_array($tipo, ['nome', 'valor', 'tipo'])) {
+                        $error = "O tipo de transação é inválido.";
+                    }
+
+                    if($tipo == 'nome'){
+                        try {
+                            $results = $buscaModel->buscaTransacaoNome($busca);
+                            if ($results) {
+                                $buscaTransacao = $results; // Isso vai mostrar os dados retornados pela consulta
+                            } else {
+                                $error = "Nenhuma transação encontrada!";
+                            }
+                         }catch (PDOException $e) {
+                            echo "Erro ao executar a consulta: " . $e->getMessage();
+                         }
+                    }else if($tipo == 'tipo'){
+                        try {
+                            $results = $buscaModel->buscaTransacaoTipo($busca);
+                            if ($results) {
+                                $buscaTransacao = $results; // Isso vai mostrar os dados retornados pela consulta
+                            } else {
+                                $error = "Nenhuma transação encontrada!";
+                            }
+                         }catch (PDOException $e) {
+                            echo "Erro ao executar a consulta: " . $e->getMessage();
+                         }
+                    }else if($tipo == 'valor'){
+                        try {
+                            $results = $buscaModel->buscaTransacaoValor($busca);
+                            if ($results) {
+                                $buscaTransacao = $results; // Isso vai mostrar os dados retornados pela consulta
+                            } else {
+                                $error = "Nenhuma transação encontrada!";
+                            }
+                         }catch (PDOException $e) {
+                            echo "Erro ao executar a consulta: " . $e->getMessage();
+                         }
+                    }
+                }
+            } 
+```
+
+Claro! Seu código está funcional, mas pode ser **refatorado para reduzir duplicação**, **melhorar a legibilidade** e **organizar melhor os blocos condicionais**. Aqui está uma sugestão de refatoração:
+
+---
+
+### ✅ Refatoração:
+
+```php
+if ($busca && $tipo) {
+    // Validação de entrada
+    if (empty($busca)) {
+        $error = "Dados da transação são obrigatórios.";
+    } elseif (!in_array($tipo, ['nome', 'valor', 'tipo'])) {
+        $error = "O tipo de transação é inválido.";
+    } else {
+        // Mapeia os métodos disponíveis por tipo
+        $metodosBusca = [
+            'nome'  => 'buscaTransacaoNome',
+            'tipo'  => 'buscaTransacaoTipo',
+            'valor' => 'buscaTransacaoValor'
+        ];
+
+        // Verifica se existe um método correspondente
+        if (array_key_exists($tipo, $metodosBusca)) {
+            try {
+                $metodo = $metodosBusca[$tipo];
+                $results = $buscaModel->$metodo($busca);
+
+                if ($results) {
+                    $buscaTransacao = $results;
+                } else {
+                    $error = "Nenhuma transação encontrada!";
+                }
+            } catch (PDOException $e) {
+                echo "Erro ao executar a consulta: " . $e->getMessage();
+            }
+        }
+    }
+}
+```
+
+---
+
+### ✅ Melhorias aplicadas:
+
+* **Evita repetição de código** (`try/catch`, `if ($results)`, etc.).
+* **Organiza os métodos em um array associativo** para facilitar a manutenção e reduzir `if`/`else`.
+* **Clareza na validação dos parâmetros**.
+* **Uso correto de `array_key_exists`** para garantir que o método exista.
+
+---
+
+Se quiser deixar ainda mais elegante, pode mover a validação para fora do `if ($busca && $tipo)` e colocar tudo de forma sequencial.
+
+Se quiser, posso também sugerir como fazer isso com **Switch**, **Factory Pattern** ou **Polimorfismo** se estiver usando POO.
+
+Deseja uma dessas versões também?
