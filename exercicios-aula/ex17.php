@@ -11,7 +11,7 @@
         echo "compra com frete pago ralaziada com sucesso";
        }else{
         // frente gratis
-        echo "compra com frete grates ralaziada com sucesso";
+        echo "compra com frete gratis ralaziada com sucesso";
        }
     }else{
         // nao tem
