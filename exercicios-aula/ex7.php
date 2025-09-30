@@ -3,6 +3,13 @@
     $numero2 = 5;
     $operador = 1;  // Definindo o operador (1 = soma, 2 = subtração, 3 = multiplicação, 4 = divisão)
 
+    // operadores : 
+    // 1 - Soma
+    // 2 - subtracao
+    // 3 - Multiplicação
+    // 4 - Divisão
+    
+
     // Usando if-else para verificar a operação
     if ($operador == 1) {
         // Soma
