@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Ingressos</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+
+<body>
+    <!-- cabeçalho do site -->
+    <div class="container">
+        <header>
+            <img src="./assets/img/logo.jpg"
+                width="150px" alt="Cinema em Lote">
+            <h1>Compra de Ingressos em Lote</h1>
+        </header>
+        <!-- Seção de Informações do Filme -->
+        <section class="informacoes-filme">
+            <div class="container-cartaz">
+                <h2>Sobre o Filme em Cataz</h2>
+                <div class="filme-info">
+                    <!-- Imagem do Filme -->
+                    <div class="filme-imagem">
+                        <img src="./assets/img/poster_filme.png"
+                            alt="Imagem do Filme" />
+                    </div>
+
+                    <!-- Descrição do Filme -->
+                    <div class="filme-descricao">
+                        <h3>Homem Aranha</h3>
+                        <p><strong>Gênero:</strong> Ação, Aventura</p>
+                        <p><strong>Duração:</strong> 120 minutos</p>
+                        <p><strong>Classificação:</strong> 12 anos</p>
+                        <p><strong>Sinopse:</strong> Um épico de ação onde o herói enfrenta desafios inimagináveis para
+                            salvar o mundo. Prepare-se para uma aventura cheia de emoção e adrenalina.</p>
+                    </div>
+                </div>
+
+                <!-- Preços dos Ingressos -->
+                <div class="precos-ingressos">
+                    <h3>Preços de Ingressos</h3>
+                    <div class="preco">
+                        <span class="tipo-ingresso">Ingresso Inteira</span>
+                        <span class="valor" data-preco="24.90" id="valor-inteira">R$ 24,90</span>
+                    </div>
+                    <div class="preco">
+                        <span class="tipo-ingresso">Ingresso Meia</span>
+                        <span class="valor" id="valor-meia" data-preco="12.45">R$ 12,45</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- formularios dos ingressos -->
+        <form action="compra_ingressos.php" method="POST">
+            <h1>Ingressos Inteira</h1>
+            <!-- Ingresso Inteira -->
+            <div class="form-group">
+                <label for="qtd_ingressos_inteira">Quantidade de Ingressos (Inteira):</label>
+                <input type="number" id="qtd_ingressos_inteira" name="qtd_ingressos_inteira" required min="1" value="0">
+            </div>
+
+            <div class="form-group-inline">
+                <div>
+                    <label for="parcelamento_inteira">Forma de Pagamento (Inteira):</label>
+                    <select id="parcelamento_inteira" name="parcelamento_inteira" required >
+                        <option value="0" disabled selected>Parcelamento</option>
+                        <option value="1">À vista 1x</option>
+                        <option value="2">Parcelado 2x</option>
+                        <option value="3">Parcelado 3x</option>
+                        <option value="4">Parcelado 4x</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="valor_total_inteira">Valor Total (Inteira):</label>
+                    <input type="text" id="valor_total_inteira" name="valor_total_inteira" required step="0.01" 
+                        disabled>
+                </div>
+            </div>
+
+            <!-- Ingresso Meia -->
+            <h1>Ingressos Meia Entrada</h1>
+            <div class="form-group">
+                <label for="qtd_ingressos_meia">Quantidade de Ingressos (Meia Entrada):</label>
+                <input type="number" id="qtd_ingressos_meia" name="qtd_ingressos_meia" required min="1" value="0">
+            </div>
+
+            <div class="form-group-inline">
+                <div>
+                    <label for="parcelamento_meia">Forma de Pagamento (Meia):</label>
+                    <select id="parcelamento_meia" name="parcelamento_meia" required >
+                        <option value="0" disabled selected>Parcelamento</option>
+                        <option value="1">À vista 1x</option>
+                        <option value="2">Parcelado 2x</option>
+                        <option value="3">Parcelado 3x</option>
+                        <option value="4">Parcelado 4x</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="valor_meia">Valor Total (Meia):</label>
+                    <input type="text" id="valor_meia" name="valor_meia" required step="0.01" disabled>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="submit-btn">Confirmar Compra</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+<script src="./assets/js/app.js"></script>
+
+</html>

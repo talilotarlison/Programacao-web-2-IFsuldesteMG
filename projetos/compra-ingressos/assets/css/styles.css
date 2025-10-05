@@ -1,0 +1,190 @@
+   body {
+       font-family: Arial, sans-serif;
+       background-color: #f4f4f4;
+       margin: 0;
+       padding: 0;
+   }
+
+   .container {
+       width: 50%;
+       margin: 0 auto;
+       background-color: white;
+       padding: 0px;
+       border-radius: 8px;
+       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+       margin-top: 50px;
+   }
+
+   h1 {
+       text-align: center;
+       color: #333;
+   }
+
+   label {
+       font-size: 16px;
+       margin-bottom: 8px;
+       display: block;
+   }
+
+   input,
+   select {
+       width: 95%;
+       padding: 10px;
+       margin-bottom: 20px;
+       border: 1px solid #ccc;
+       border-radius: 5px;
+       font-size: 16px;
+   }
+
+   .form-group {
+       margin-bottom: 20px;
+       padding-bottom: 20px;
+   }
+
+   .form-group-inline {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+   }
+
+   .form-group-inline div {
+       width: 48%;
+   }
+
+   form {
+       margin: 20px;
+   }
+
+   /* .submit-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .submit-btn:hover {
+            background-color: #218838;
+        } */
+
+   .submit-btn {
+       background-image: linear-gradient(to right, #EB3349 0%, #F45C43 51%, #EB3349 100%)
+   }
+
+   .submit-btn {
+       margin: 10px;
+       padding: 15px 45px;
+       text-align: center;
+       text-transform: uppercase;
+       transition: 0.5s;
+       background-size: 200% auto;
+       color: white;
+       box-shadow: 0 0 20px #eee;
+       border-radius: 10px;
+       display: block;
+   }
+
+   .submit-btn:hover {
+       background-position: right center;
+       /* change the direction of the change here */
+       color: #fff;
+       text-decoration: none;
+   }
+
+   /* header da pagina */
+   header {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       text-align: center;
+   }
+
+   /* sesao cartaz do filmes */
+   .informacoes-filme {
+       padding: 30px 0 30px 0;
+       font-family: Arial, sans-serif;
+       background: #d3d3d3a2;
+       /* fallback for old browsers */
+
+
+   }
+
+   .informacoes-filme .container-cartaz {
+       all: unset;
+       margin: 0 auto;
+       border: none;
+
+   }
+
+   h2 {
+       text-align: center;
+       color: #333;
+       font-size: 28px;
+       margin-bottom: 30px;
+   }
+
+   .filme-info {
+       display: flex;
+       align-items: center;
+       width: 480px;
+       justify-content: space-between;
+       margin: 0 auto;
+       margin-bottom: 40px;
+       gap: 20px;
+       /* flex-wrap: wrap; */
+
+   }
+
+   .filme-imagem img {
+       width: 250px;
+       height: auto;
+       border-radius: 8px;
+       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+   }
+
+   .filme-descricao {
+       max-width: 60%;
+   }
+
+   .filme-descricao h3 {
+       font-size: 24px;
+       color: #333;
+       margin-bottom: 15px;
+   }
+
+   .filme-descricao p {
+       font-size: 16px;
+       color: #555;
+       line-height: 1.6;
+   }
+
+   .precos-ingressos {
+       text-align: center;
+       margin-top: 30px;
+
+       background: #833ab4;
+       /* fallback for old browsers */
+       background: -webkit-linear-gradient(to right, #fcb045, #fd1d1d, #833ab4);
+       /* Chrome 10-25, Safari 5.1-6 */
+       background: linear-gradient(to right, #fcb045, #fd1d1d, #833ab4);
+       /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+       padding: 10px 10px 30px 10px;
+       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+   }
+
+   .precos-ingressos h3 {
+       font-size: 24px;
+       color: aliceblue;
+       margin-bottom: 20px;
+   }
+
+   .preco {
+       font-size: 18px;
+       color: aliceblue;
+   }
